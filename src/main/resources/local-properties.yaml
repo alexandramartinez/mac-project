@@ -1,0 +1,15 @@
+http:
+  port: "8081"
+  host: "0.0.0.0"
+  paths:
+    agentforce:
+      start: /agentforce/conversation/start
+      continue: /agentforce/conversation/continue
+
+salesforce:
+  domain: YOUR_SALESFORCE_ORG_DOMAIN
+
+agentforce:
+  clientId: YOUR_CONNECTED_APP_CLIENT_ID
+  clientSecret: YOUR_CONNECTED_APP_CLIENT_SECRET
+  tokenUrl: https://${salesforce.domain}/services/oauth2/token

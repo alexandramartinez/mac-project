@@ -1,0 +1,126 @@
+# MuleSoft AI Chain (MAC) Project testing
+
+This project demonstrates how to integrate the [MAC project](https://mac-project.ai/)'s modules and connectors for your Mule projects.
+
+## In this Project
+
+### [Agentforce](https://mac-project.ai/docs/agentforce)
+
+- [**Conversation**](https://mac-project.ai/docs/agentforce/supported-operations/conversation)
+  - Start
+  - Continue
+  - End
+
+## Prerequisites
+
+- **Salesforce org** - Create a new dev account [here](https://www.salesforce.com/form/developer-signup/?d=pb)
+- **MuleSoft IDE** - Anypoint Studio or Anypoint Code Builder
+
+## Salesforce Configuration
+
+### 1. Salesforce Connected App
+
+> [!NOTE]
+> Based on [these instructions](https://developer.salesforce.com/docs/einstein/genai/guide/agent-api-get-started.html).
+
+1. Open your Salesforce org and to go **Setup**.
+2. From setup, use **Quick Find** to search for **App Manager**.
+3. Click **New Connected App** and then select **Create a Connected App**.
+4. Specify a Connected App Name like `mac_project`.
+5. Add your contact email. Make sure it's a real email, you'll need it later.
+6. Check **Enable OAuth Settings** ✅
+7. Callback URL: `https://login.salesforce.com`
+8. Selected OAuth Scopes. **Do NOT select more scopes or you'll get a scope error**:
+   - Access chatbot services (chatbot_api)
+   - Access the Salesforce API Platform (sfap_api)
+   - Manage user data via APIs (api)
+   - Perform requests at any time (refresh_token, offline_access)
+9. Deselect/select the following settings:
+   - Require Proof Key for Code Exchange (PKCE) Extension for Supported Authorization Flows ◻️
+   - Require Secret for Web Server Flow ◻️
+   - Require Secret for Refresh Token Flow ◻️
+   - Enable Client Credentials Flow ✅
+   - Enable Authorization Code and Credentials Flow ◻️
+   - Enable Token Exchange Flow ◻️
+   - Enable Refresh Token Rotation ◻️
+   - Issue JSON Web Token (JWT)-based access tokens for named users ✅
+   - Introspect All Tokens ◻️
+10. Save the app and click **Continue**.
+11. Once you're in the **Manage Connected Apps** page, click **Manage**.
+12. Click **Edit Policies**.
+    - Permitted Users: **All users may self-authorize**
+    - Enable Single Logout ◻️
+    - Run As `<select your user, in my case, Alex Martinez>`
+    - Issue JSON Web Token (JWT)-based access tokens ✅
+    - Token Timeout: **30 Minutes**
+13. Go back to the connected app and click **Manage Consumer Details**.
+14. Add your verification code from your email.
+15. Click **generate** and then **apply**.
+16. Copy the consumer key/secret from the top. You will use these in MuleSoft.
+
+### 2. Agentforce Setup
+
+1. In Setup, go to **Einstein Setup** and turn on Einstein.
+2. Wait a few seconds and **refresh the site**. You might not see the following options if you don't refresh.
+3. Look for **Agentforce Agents** and turn on Agentforce.
+4. Enable the Agentforce default Agent.
+5. In **Agentforce Agents**, click on **New Agent**.
+6. Create from a Template > **Agentforce Service Agent**
+7. Remove all the topics to start from scratch
+8. Add the following details:
+    - Name: `Agentforce MuleSoft Agent`
+    - API Name: `Agentforce_MuleSoft_Agent`
+    - Description: `Use custom topics and actions to connect to your MuleSoft APIs.`
+    - Role: `An AI customer service agent who connects to MuleSoft APIs for custom functionality.`
+    - Company: `This company is used for demo purposes.`
+9. Don't add Data Cloud resources for this example.
+10. Once the agent is created and you have it open, click **Connections**.
+11. Click on **Add** to add a new connection.
+12. Select **API**, add an integration name like `MAC Project Integration` and select the connected app you previously created (`mac_project`).
+13. Once you add the connection, make sure to click on **Activate** at the top-right of the screen.
+
+## Mule Configuration
+
+Configure your environment and Salesforce credentials:
+
+```yaml
+http:
+  port: "8081"
+  host: "0.0.0.0"
+  paths:
+    agentforce:
+      start: /agentforce/conversation/start
+      continue: /agentforce/conversation/continue
+
+salesforce:
+  domain: YOUR_SALESFORCE_ORG_DOMAIN
+
+agentforce:
+  clientId: YOUR_CONNECTED_APP_CLIENT_ID
+  clientSecret: YOUR_CONNECTED_APP_CLIENT_SECRET
+  tokenUrl: https://${salesforce.domain}/services/oauth2/token
+```
+
+Your Client ID / Secret is the same from your Connected App's Consumer Key / Secret. 
+
+You can obtain your Salesforce Org's domain from Salesforce Setup > **My Domain** > **Current My Domain URL**. For example: `orgfarm-6acf46e05z-dev-ed.develop.my.salesforce.com`
+
+## Running the Project
+
+1. Import the project into Anypoint Studio or Anypoint Code Builder.
+2. Ensure your `local-properties.yaml` is correctly configured.
+3. Run the Mule application.
+
+You can find the HTTP requests in [requests/](/requests/). I am using the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension in VS Code to run these from the text editor, but you can use Postman, cURL, or any other REST Client you prefer.
+
+## Troubleshooting
+
+- **Authentication errors:** Double-check your Client ID, Client Secret, and Connected App settings.
+- **Scope errors:** Make sure the scopes in your Connected App are set up correctly. If you add more/less scopes than the mentioned in the settings here, you might get scope errors.
+- **Network issues:** Ensure your Mule server can reach Salesforce.
+
+## References
+
+- [Salesforce OAuth Scopes Documentation](https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_scopes.htm)
+- [Salesforce Agent API - Get Started](https://developer.salesforce.com/docs/einstein/genai/guide/agent-api-get-started.html)
+- [Agentforce Supported Operations - Conversation](https://mac-project.ai/docs/agentforce/supported-operations/conversation)

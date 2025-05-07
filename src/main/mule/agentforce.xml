@@ -1,0 +1,17 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ms-agentforce="http://www.mulesoft.org/schema/mule/ms-agentforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ms-agentforce http://www.mulesoft.org/schema/mule/ms-agentforce/current/mule-ms-agentforce.xsd">
+  <flow name="agentforce-conversation-start">
+    <http:listener config-ref="Listener-config" doc:id="lnzfho" doc:name="start" path="${http.paths.agentforce.start}"></http:listener>
+    <ms-agentforce:start-agent-conversation agent="0XxgK000000KDvZSAW" config-ref="Agentforce-config" doc:id="fokpbn" doc:name="Start agent conversation"></ms-agentforce:start-agent-conversation>
+  </flow>
+  <flow name="agentforce-conversation-continue">
+    <http:listener config-ref="Listener-config" doc:id="zhixkw" doc:name="continue" path="${http.paths.agentforce.continue}"></http:listener>
+    <ms-agentforce:continue-agent-conversation config-ref="Agentforce-config" doc:id="bbhbgk" doc:name="Continue agent conversation" messageSequenceNumber="#[attributes.queryParams.sequenceNumber]">
+      <ms-agentforce:session-id>#[attributes.queryParams.sessionId]</ms-agentforce:session-id>
+    </ms-agentforce:continue-agent-conversation>
+  </flow>
+  <flow name="agentforce-conversation-end">
+    <http:listener path="${http.paths.agentforce.end}" doc:name="end" doc:id="ttigkn" config-ref="Listener-config"/>
+    <ms-agentforce:end-agent-conversation doc:name="End agent conversation" doc:id="jgjphp" config-ref="Agentforce-config">
+      <ms-agentforce:session-id>#[attributes.queryParams.sessionId]</ms-agentforce:session-id>
+    </ms-agentforce:end-agent-conversation></flow>
+</mule>
