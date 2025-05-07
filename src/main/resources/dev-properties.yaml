@@ -5,6 +5,7 @@ http:
     agentforce:
       start: /agentforce/conversation/start
       continue: /agentforce/conversation/continue
+      end: /agentforce/conversation/end
 
 salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN

@@ -51,3 +51,4 @@ velocity.log
 services/
 .vscode/
 src/test/resources/embedded*
+local-properties.yaml

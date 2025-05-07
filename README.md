@@ -81,24 +81,17 @@ This project demonstrates how to integrate the [MAC project](https://mac-project
 
 ## Mule Configuration
 
+Copy the [dev-properties.yaml] file and create a `local-properties.yaml` file.
+
 Configure your environment and Salesforce credentials:
 
 ```yaml
-http:
-  port: "8081"
-  host: "0.0.0.0"
-  paths:
-    agentforce:
-      start: /agentforce/conversation/start
-      continue: /agentforce/conversation/continue
-
 salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN
 
 agentforce:
   clientId: YOUR_CONNECTED_APP_CLIENT_ID
   clientSecret: YOUR_CONNECTED_APP_CLIENT_SECRET
-  tokenUrl: https://${salesforce.domain}/services/oauth2/token
 ```
 
 Your Client ID / Secret is the same from your Connected App's Consumer Key / Secret. 
