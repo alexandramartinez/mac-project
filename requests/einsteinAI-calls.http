@@ -1,5 +1,5 @@
 
-# chat answer prompt
+# chat - answer prompt
   POST http://localhost:8081/einstein/chat/answerPrompt 
   content-type: text/plain
 
@@ -7,7 +7,7 @@
 
 ###
 
-# chat generate from messages
+# chat - generate from messages
   POST http://localhost:8081/einstein/chat/generateFromMessages 
   content-type: application/json
 
@@ -28,8 +28,14 @@
 
 ###
 
-# adhoc file query
+# embeddings - adhoc file query
   POST http://localhost:8081/einstein/embeddings/adhocFileQuery
   content-type: text/plain
   
   can I bring my dog?
+
+###
+
+# embeddings - generate from file
+  GET http://localhost:8081/einstein/embeddings/generateFromFile
+  
