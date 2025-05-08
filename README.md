@@ -6,10 +6,31 @@ This project demonstrates how to integrate the [MAC project](https://mac-project
 
 ### [Agentforce](https://mac-project.ai/docs/agentforce)
 
+Connect to your Agentforce Agent via API.
+
 - [**Conversation**](https://mac-project.ai/docs/agentforce/supported-operations/conversation)
   - Start
   - Continue
   - End
+
+### [Einstein AI](https://docs.mulesoft.com/einstein-ai-connector/latest/)
+
+Use the Einstein AI trust layer to make use of different models from Einstein.
+
+- [**Chat**](https://docs.mulesoft.com/einstein-ai-connector/latest/configuring-chat-operations)
+  - Answer Prompt
+  - Generate From Messages
+- [**Embeddings**](https://docs.mulesoft.com/einstein-ai-connector/latest/configuring-embeddings-operations)
+  - Adhoc File Query
+  - Generate From File
+  - Generate From Text
+- [**RAG**](https://docs.mulesoft.com/einstein-ai-connector/latest/configuring-rag-operations)
+  - Adhoc Load Document
+
+   > [!NOTE]
+   > **Chat** and **RAG** make use of LLMs to give an answer in natural language, whereas **Embeddings** will give numeric responses since no LLM is being used.
+   >
+   > **Tools - Use AI Service** operation is not included in this project.
 
 ## Prerequisites
 
