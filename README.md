@@ -27,7 +27,7 @@ Use the Einstein AI trust layer to make use of different models from Einstein.
 - [**RAG**](https://docs.mulesoft.com/einstein-ai-connector/latest/configuring-rag-operations)
   - Adhoc Load Document
 
-> [!NOTE]
+> [!TIP]
 > **Chat** and **RAG** make use of LLMs to give an answer in natural language, whereas **Embeddings** will give numeric responses since no LLM is being used.
 >
 > **Tools - Use AI Service** operation is not included in this project.
