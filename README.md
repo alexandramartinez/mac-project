@@ -90,10 +90,7 @@ Copy the [dev-properties.yaml](src/main/resources/dev-properties.yaml) file and 
 Configure your environment and Salesforce credentials:
 
 ```yaml
-salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN
-
-agentforce:
   clientId: YOUR_CONNECTED_APP_CLIENT_ID
   clientSecret: YOUR_CONNECTED_APP_CLIENT_SECRET
 ```

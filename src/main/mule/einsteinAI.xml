@@ -1,0 +1,23 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ms-einstein-ai="http://www.mulesoft.org/schema/mule/ms-einstein-ai" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ms-einstein-ai http://www.mulesoft.org/schema/mule/ms-einstein-ai/current/mule-ms-einstein-ai.xsd
+	http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+  <flow name="einstein-chat-answer_prompt">
+    <http:listener config-ref="Listener-config" doc:id="lawzxe" doc:name="answer prompt" path="${http.paths.einstein.chat.answerPrompt}"></http:listener>
+    <ms-einstein-ai:chat-answer-prompt config-ref="EinsteinAI-config" doc:id="rqbyrn" doc:name="Chat answer prompt" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku"></ms-einstein-ai:chat-answer-prompt>
+  </flow>
+  <flow name="einstein-chat-generate_from_messages">
+    <http:listener path="${http.paths.einstein.chat.generateFromMessages}" doc:name="generate from messages" doc:id="mdbmbq" config-ref="Listener-config"/>
+        <ee:transform doc:name="JSON to String" doc:id="hlommx" >
+            <ee:message >
+                <ee:set-payload doc:name="Set payload" doc:id="qijqws" ><![CDATA[%dw 2.0
+output application/json
+---
+payload match {
+    case is String -> payload
+    else -> write(payload, "application/json", {indent:false})
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    <ms-einstein-ai:chat-generate-from-messages doc:name="Chat generate from messages" doc:id="lkgmgp" config-ref="EinsteinAI-config" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku"/>
+  </flow>
+</mule>

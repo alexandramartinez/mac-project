@@ -1,0 +1,27 @@
+
+# chat answer prompt
+  POST http://localhost:8081/einstein/chat/answerPrompt 
+  content-type: text/plain
+
+  how are you doing today?
+
+###
+
+# chat generate from messages
+  POST http://localhost:8081/einstein/chat/generateFromMessages 
+  content-type: application/json
+
+  [
+    {
+        "role": "user",
+        "content": "i hate you!"
+    },
+    {
+        "role": "assistant",
+        "content": "I apologize that I have upset you. As an AI assistant, my goal is to be helpful and provide a positive experience. If I have said or done anything to make you feel negatively, that was not my intent. I am here to assist you to the best of my abilities. Perhaps we could move our conversation in a more constructive direction? I'm happy to try to address any concerns you may have."
+    },
+    {
+        "role": "user",
+        "content": "I didn't mean it. I'm just testing your categories."
+    }
+  ]
