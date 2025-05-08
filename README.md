@@ -67,21 +67,25 @@ This project demonstrates how to integrate the [MAC project](https://mac-project
 5. In **Agentforce Agents**, click on **New Agent**.
 6. Create from a Template > **Agentforce Service Agent**
 7. Remove all the topics to start from scratch
+   - (optional) Add the Off Topic topic with the information from [off-topic.md](/topics/off-topic.md)
 8. Add the following details:
     - Name: `Agentforce MuleSoft Agent`
     - API Name: `Agentforce_MuleSoft_Agent`
     - Description: `Use custom topics and actions to connect to your MuleSoft APIs.`
     - Role: `An AI customer service agent who connects to MuleSoft APIs for custom functionality.`
     - Company: `This company is used for demo purposes.`
-9. Don't add Data Cloud resources for this example.
+9.  Don't add Data Cloud resources for this example.
 10. Once the agent is created and you have it open, click **Connections**.
 11. Click on **Add** to add a new connection.
 12. Select **API**, add an integration name like `MAC Project Integration` and select the connected app you previously created (`mac_project`).
 13. Once you add the connection, make sure to click on **Activate** at the top-right of the screen.
 
+> [!IMPORTANT]
+> The Mule API cannot call Agents that are deactivated. Make sure that it's **Active** in Salesforce. BUT anytime that you need to modify the agent, you have to deactivate it first.
+
 ## Mule Configuration
 
-Copy the [dev-properties.yaml] file and create a `local-properties.yaml` file.
+Copy the [dev-properties.yaml](src/main/resources/dev-properties.yaml) file and create a `local-properties.yaml` file.
 
 Configure your environment and Salesforce credentials:
 

@@ -6,14 +6,14 @@
 
 # continue conversation
   POST http://localhost:8081/agentforce/conversation/continue
-    ?sessionId=223a0f1b-909a-4cd9-9a6d-c378a6f9c1c5
+    ?sessionId=376b5eca-94ac-4acd-81cc-ce0131e241f6
     &sequenceNumber=1
   content-type: text/plain
 
-  what's the capital of Canada?
+  how are you doing today?
 
 ###
 
 # end conversation
   GET http://localhost:8081/agentforce/conversation/end
-    ?sessionId=223a0f1b-909a-4cd9-9a6d-c378a6f9c1c5
+    ?sessionId=376b5eca-94ac-4acd-81cc-ce0131e241f6
