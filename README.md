@@ -4,7 +4,7 @@ This project demonstrates how to integrate the [MAC project](https://mac-project
 
 ## In this Project
 
-### [Agentforce](https://mac-project.ai/docs/agentforce)
+### Agentforce
 
 Connect to your Agentforce Agent via API.
 
@@ -13,7 +13,7 @@ Connect to your Agentforce Agent via API.
   - Continue
   - End
 
-### [Einstein AI](https://docs.mulesoft.com/einstein-ai-connector/latest/)
+### Einstein AI
 
 Use the Einstein AI trust layer to make use of different models from Einstein.
 
