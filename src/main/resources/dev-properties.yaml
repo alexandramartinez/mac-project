@@ -14,6 +14,7 @@ http:
         adhocFileQuery: /einstein/embeddings/adhocFileQuery
         generateFromFile: /einstein/embeddings/generateFromFile
         generateFromText: /einstein/embeddings/generateFromText
+      rag: /einstein/rag
 
 salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN

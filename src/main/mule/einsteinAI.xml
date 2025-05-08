@@ -33,6 +33,15 @@ payload match {
     <ms-einstein-ai:embedding-generate-from-file config-ref="EinsteinAI-config" doc:id="keadwn" doc:name="Embedding generate from file"></ms-einstein-ai:embedding-generate-from-file>
   </flow>
   <flow name="einstein-embeddings-generate_from_text">
-    <http:listener path="${http.paths.einstein.embeddings.generateFromText}" doc:name="generate from text" doc:id="vutrfr" config-ref="Listener-config"/>
-    <ms-einstein-ai:embedding-generate-from-text doc:name="Embedding generate from text" doc:id="pvxvdc" config-ref="EinsteinAI-config"/></flow>
+    <http:listener config-ref="Listener-config" doc:id="vutrfr" doc:name="generate from text" path="${http.paths.einstein.embeddings.generateFromText}"></http:listener>
+    <ms-einstein-ai:embedding-generate-from-text config-ref="EinsteinAI-config" doc:id="pvxvdc" doc:name="Embedding generate from text"></ms-einstein-ai:embedding-generate-from-text>
+  </flow>
+  <flow name="einstein-rag-adhoc_load_document">
+    <http:listener path="${http.paths.einstein.rag}" doc:name="adhoc load document" doc:id="skergu" config-ref="Listener-config"/>
+    <set-variable doc:id="rczsoat" doc:name="inputPayload" value="#[payload]" variableName="inputPayload"></set-variable>
+    <file:read config-ref="File-config" doc:id="jnbssco" doc:name="CoralCloudResortFAQs.pdf" path="CoralCloudResortFAQs.pdf"></file:read>
+    <ms-einstein-ai:rag-adhoc-load-document doc:name="Rag adhoc load document" doc:id="iplxkc" config-ref="EinsteinAI-config" optionType="PARAGRAPH" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku">
+      <ms-einstein-ai:prompt>#[vars.inputPayload]</ms-einstein-ai:prompt>
+      <ms-einstein-ai:input-stream>#[payload]</ms-einstein-ai:input-stream>    
+    </ms-einstein-ai:rag-adhoc-load-document></flow>
 </mule>
