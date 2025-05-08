@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ms-agentforce="http://www.mulesoft.org/schema/mule/ms-agentforce" xmlns:ms-einstein-ai="http://www.mulesoft.org/schema/mule/ms-einstein-ai" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-	http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-  http://www.mulesoft.org/schema/mule/ms-agentforce http://www.mulesoft.org/schema/mule/ms-agentforce/current/mule-ms-agentforce.xsd
-	http://www.mulesoft.org/schema/mule/ms-einstein-ai http://www.mulesoft.org/schema/mule/ms-einstein-ai/current/mule-ms-einstein-ai.xsd">
-
-  <global-property name="env" value="local" />
-  <configuration-properties file="${env}-properties.yaml" doc:name="Configuration properties" />
-  <http:listener-config name="Listener-config" doc:name="HTTP Listener config">
-    <http:listener-connection host="${http.host}" port="${http.port}" />
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ms-agentforce="http://www.mulesoft.org/schema/mule/ms-agentforce" xmlns:ms-einstein-ai="http://www.mulesoft.org/schema/mule/ms-einstein-ai" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd   http://www.mulesoft.org/schema/mule/ms-agentforce http://www.mulesoft.org/schema/mule/ms-agentforce/current/mule-ms-agentforce.xsd  http://www.mulesoft.org/schema/mule/ms-einstein-ai http://www.mulesoft.org/schema/mule/ms-einstein-ai/current/mule-ms-einstein-ai.xsd  http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+  <global-property name="env" value="local"></global-property>
+  <configuration-properties doc:name="Configuration properties" file="${env}-properties.yaml"></configuration-properties>
+  <http:listener-config doc:name="HTTP Listener config" name="Listener-config">
+    <http:listener-connection host="${http.host}" port="${http.port}"></http:listener-connection>
   </http:listener-config>
-  <ms-agentforce:config name="Agentforce-config" doc:name="AgentForce Config">
+  <ms-agentforce:config doc:name="AgentForce Config" name="Agentforce-config">
     <ms-agentforce:oauth-client-credentials-connection>
-      <ms-agentforce:oauth-client-credentials clientSecret="${salesforce.clientSecret}" clientId="${salesforce.clientId}" tokenUrl="${salesforce.tokenUrl}" />
+      <ms-agentforce:oauth-client-credentials clientId="${salesforce.clientId}" clientSecret="${salesforce.clientSecret}" tokenUrl="${salesforce.tokenUrl}"></ms-agentforce:oauth-client-credentials>
     </ms-agentforce:oauth-client-credentials-connection>
   </ms-agentforce:config>
-  <ms-einstein-ai:config name="EinsteinAI-config" doc:name="Einstein AI Config">
+  <ms-einstein-ai:config doc:name="Einstein AI Config" name="EinsteinAI-config">
     <ms-einstein-ai:oauth-client-credentials-connection>
-      <ms-einstein-ai:oauth-client-credentials clientSecret="${salesforce.clientSecret}" clientId="${salesforce.clientId}" tokenUrl="${salesforce.tokenUrl}" />
+      <ms-einstein-ai:oauth-client-credentials clientId="${salesforce.clientId}" clientSecret="${salesforce.clientSecret}" tokenUrl="${salesforce.tokenUrl}"></ms-einstein-ai:oauth-client-credentials>
     </ms-einstein-ai:oauth-client-credentials-connection>
   </ms-einstein-ai:config>
+  <file:config doc:name="File Config" name="File-config">
+    <file:connection workingDir="#[Mule::p('app.home')]"></file:connection>
+  </file:config>
 </mule>

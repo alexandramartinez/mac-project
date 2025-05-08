@@ -25,3 +25,11 @@
         "content": "I didn't mean it. I'm just testing your categories."
     }
   ]
+
+###
+
+# adhoc file query
+  POST http://localhost:8081/einstein/embeddings/adhocFileQuery
+  content-type: text/plain
+  
+  can I bring my dog?
