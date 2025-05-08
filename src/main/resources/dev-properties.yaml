@@ -7,6 +7,7 @@ http:
       continue: /agentforce/conversation/continue
       end: /agentforce/conversation/end
     einstein:
+      agent: /einstein/agent
       chat:
         answerPrompt: /einstein/chat/answerPrompt
         generateFromMessages: /einstein/chat/generateFromMessages
@@ -15,7 +16,7 @@ http:
         generateFromFile: /einstein/embeddings/generateFromFile
         generateFromText: /einstein/embeddings/generateFromText
       rag: /einstein/rag
-
+      
 salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN
   clientId: YOUR_CONNECTED_APP_CLIENT_ID

@@ -1,4 +1,12 @@
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ms-einstein-ai="http://www.mulesoft.org/schema/mule/ms-einstein-ai" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ms-einstein-ai http://www.mulesoft.org/schema/mule/ms-einstein-ai/current/mule-ms-einstein-ai.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+  <flow name="einstein-agent-define_prompt_template">
+    <http:listener path="${http.paths.einstein.agent}" doc:name="define prompt template" doc:id="mkmjet" config-ref="Listener-config" />
+    <ms-einstein-ai:agent-define-prompt-template doc:name="Agent define prompt template" doc:id="jcfmxc" config-ref="EinsteinAI-config">
+      <ms-einstein-ai:template>#[payload.template]</ms-einstein-ai:template>
+      <ms-einstein-ai:instructions>#[payload.instructions]</ms-einstein-ai:instructions>
+      <ms-einstein-ai:dataset>#[payload.dataset]</ms-einstein-ai:dataset>
+    </ms-einstein-ai:agent-define-prompt-template>
+  </flow>
   <flow name="einstein-chat-answer_prompt">
     <http:listener config-ref="Listener-config" doc:id="lawzxe" doc:name="answer prompt" path="${http.paths.einstein.chat.answerPrompt}"></http:listener>
     <ms-einstein-ai:chat-answer-prompt config-ref="EinsteinAI-config" doc:id="rqbyrn" doc:name="Chat answer prompt" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku"></ms-einstein-ai:chat-answer-prompt>
@@ -7,13 +15,15 @@
     <http:listener config-ref="Listener-config" doc:id="mdbmbq" doc:name="generate from messages" path="${http.paths.einstein.chat.generateFromMessages}"></http:listener>
     <ee:transform doc:id="hlommx" doc:name="JSON to String">
       <ee:message>
-        <ee:set-payload doc:id="qijqws" doc:name="Set payload"><![CDATA[%dw 2.0
+        <ee:set-payload doc:id="qijqws" doc:name="Set payload">
+          <![CDATA[%dw 2.0
 output application/json
 ---
 payload match {
     case is String -> payload
     else -> write(payload, "application/json", {indent:false})
-}]]></ee:set-payload>
+}]]>
+        </ee:set-payload>
       </ee:message>
     </ee:transform>
     <ms-einstein-ai:chat-generate-from-messages config-ref="EinsteinAI-config" doc:id="lkgmgp" doc:name="Chat generate from messages" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku"></ms-einstein-ai:chat-generate-from-messages>
@@ -37,11 +47,12 @@ payload match {
     <ms-einstein-ai:embedding-generate-from-text config-ref="EinsteinAI-config" doc:id="pvxvdc" doc:name="Embedding generate from text"></ms-einstein-ai:embedding-generate-from-text>
   </flow>
   <flow name="einstein-rag-adhoc_load_document">
-    <http:listener path="${http.paths.einstein.rag}" doc:name="adhoc load document" doc:id="skergu" config-ref="Listener-config"/>
+    <http:listener config-ref="Listener-config" doc:id="skergu" doc:name="adhoc load document" path="${http.paths.einstein.rag}"></http:listener>
     <set-variable doc:id="rczsoat" doc:name="inputPayload" value="#[payload]" variableName="inputPayload"></set-variable>
     <file:read config-ref="File-config" doc:id="jnbssco" doc:name="CoralCloudResortFAQs.pdf" path="CoralCloudResortFAQs.pdf"></file:read>
-    <ms-einstein-ai:rag-adhoc-load-document doc:name="Rag adhoc load document" doc:id="iplxkc" config-ref="EinsteinAI-config" optionType="PARAGRAPH" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku">
+    <ms-einstein-ai:rag-adhoc-load-document config-ref="EinsteinAI-config" doc:id="iplxkc" doc:name="Rag adhoc load document" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku" optionType="PARAGRAPH">
       <ms-einstein-ai:prompt>#[vars.inputPayload]</ms-einstein-ai:prompt>
-      <ms-einstein-ai:input-stream>#[payload]</ms-einstein-ai:input-stream>    
-    </ms-einstein-ai:rag-adhoc-load-document></flow>
+      <ms-einstein-ai:input-stream>#[payload]</ms-einstein-ai:input-stream>
+    </ms-einstein-ai:rag-adhoc-load-document>
+  </flow>
 </mule>
