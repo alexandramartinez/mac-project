@@ -38,4 +38,11 @@
 
 # embeddings - generate from file
   GET http://localhost:8081/einstein/embeddings/generateFromFile
+
+###
+
+# embeddings - generate from text
+  POST http://localhost:8081/einstein/embeddings/generateFromText
+  content-type: text/plain
   
+  Check-in is at 3:00PM. If you arrive prior to check-in, our helpful staff will safely secure your luggage and inform you when your room is ready. Check-out is at 11:00AM, so if your flight departs later, you can easily secure your luggage with us and still enjoy the amenities, like grabbing a bite to eat or laying by the ocean while you wait.

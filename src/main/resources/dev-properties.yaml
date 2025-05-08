@@ -13,6 +13,7 @@ http:
       embeddings:
         adhocFileQuery: /einstein/embeddings/adhocFileQuery
         generateFromFile: /einstein/embeddings/generateFromFile
+        generateFromText: /einstein/embeddings/generateFromText
 
 salesforce:
   domain: YOUR_SALESFORCE_ORG_DOMAIN

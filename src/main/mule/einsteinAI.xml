@@ -7,15 +7,13 @@
     <http:listener config-ref="Listener-config" doc:id="mdbmbq" doc:name="generate from messages" path="${http.paths.einstein.chat.generateFromMessages}"></http:listener>
     <ee:transform doc:id="hlommx" doc:name="JSON to String">
       <ee:message>
-        <ee:set-payload doc:id="qijqws" doc:name="Set payload">
-          <![CDATA[%dw 2.0
+        <ee:set-payload doc:id="qijqws" doc:name="Set payload"><![CDATA[%dw 2.0
 output application/json
 ---
 payload match {
     case is String -> payload
     else -> write(payload, "application/json", {indent:false})
-}]]>
-        </ee:set-payload>
+}]]></ee:set-payload>
       </ee:message>
     </ee:transform>
     <ms-einstein-ai:chat-generate-from-messages config-ref="EinsteinAI-config" doc:id="lkgmgp" doc:name="Chat generate from messages" modelApiName="sfdc_ai__DefaultBedrockAnthropicClaude3Haiku"></ms-einstein-ai:chat-generate-from-messages>
@@ -30,8 +28,11 @@ payload match {
     </ms-einstein-ai:embedding-adhoc-file-query>
   </flow>
   <flow name="einstein-embeddings-generate_from_file">
-    <http:listener path="${http.paths.einstein.embeddings.generateFromFile}" doc:name="generate from file" doc:id="jcdsun" config-ref="Listener-config" />
+    <http:listener config-ref="Listener-config" doc:id="jcdsun" doc:name="generate from file" path="${http.paths.einstein.embeddings.generateFromFile}"></http:listener>
     <file:read config-ref="File-config" doc:id="jnbscso" doc:name="CoralCloudResortFAQs.pdf" path="CoralCloudResortFAQs.pdf"></file:read>
-    <ms-einstein-ai:embedding-generate-from-file doc:name="Embedding generate from file" doc:id="keadwn" config-ref="EinsteinAI-config" />
+    <ms-einstein-ai:embedding-generate-from-file config-ref="EinsteinAI-config" doc:id="keadwn" doc:name="Embedding generate from file"></ms-einstein-ai:embedding-generate-from-file>
   </flow>
+  <flow name="einstein-embeddings-generate_from_text">
+    <http:listener path="${http.paths.einstein.embeddings.generateFromText}" doc:name="generate from text" doc:id="vutrfr" config-ref="Listener-config"/>
+    <ms-einstein-ai:embedding-generate-from-text doc:name="Embedding generate from text" doc:id="pvxvdc" config-ref="EinsteinAI-config"/></flow>
 </mule>
